@@ -1,5 +1,6 @@
 const userDatabase = [
-    { id: 1, userName: 'Stijn', userPwd: 'test'}
+    { id: 1, userName: 'Stijn', userPwd: 'test', userRole: 'admin'},
+    { id: 2, userName: 'Kean', userPwd: 'test', userRole: 'user'},
 ];
 
 export default function authenticateUser(name, password) {

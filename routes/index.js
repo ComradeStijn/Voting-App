@@ -1,9 +1,10 @@
 import express from 'express';
-import isAuthenticated from '../controllers/authenticationController.js';
+import isAuthenticated, { isAdmin } from '../controllers/authenticationController.js';
+
 
 const router = express.Router();
 
-router.get('/', isAuthenticated, (req, res) => {
+router.get('/', isAuthenticated, isAdmin, (req, res) => {
     res.send('Hello');
 })
 

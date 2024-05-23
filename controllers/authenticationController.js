@@ -18,6 +18,7 @@ export async function login(req, res, next) {
             req.session.user = {
                 id: user.id,
                 userName: user.userName,
+                userRole: user.userRole,
             };
             next();
         }
@@ -45,5 +46,15 @@ export default function isAuthenticated(req, res, next) {
     } else {
         console.warn('User is not authenticated, Redirecting to login page.');
         res.redirect('/login');
+    }
+}
+
+export function isAdmin(req, res, next) {
+    if (req.session.user.userRole == 'admin') {
+        next();
+    } else {
+        const err = new Error('User is not administrator');
+        err.status = 401;
+        return next(err);
     }
 }
