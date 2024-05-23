@@ -3,7 +3,8 @@ import path from 'path';
 import url from 'url';
 import session from 'express-session';
 import { isAuthenticated } from './controllers/authenticationController.js';
-import authenticationRouter from './routes/authenticationRoute.js';
+import loginRouter from './routes/login.js';
+import logoutRouter from './routes/logout.js';
 import bodyParser from 'body-parser';
 
 const app = express();
@@ -30,7 +31,8 @@ app.get('/', isAuthenticated, (req, res) => {
     res.send('logged in');
 })
 
-app.use('/login', authenticationRouter);
+app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 
 app.listen(port , () => {
     console.log(`Voting-app running on port ${port}`);

@@ -8,8 +8,8 @@ export function login(req, res) {
     const user = authenticate(userName, userPwd);
     if (user) {
         req.session.user = user;
-        res.redirect('/');
     }
+    res.redirect('/')
 }
 
 export function logout(req, res) {
