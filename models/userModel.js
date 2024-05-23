@@ -30,16 +30,16 @@ export default async function authenticateUser(name, password) {
     })
 }
 
-export function createUser(name, password) {
-    if (typeof name == 'string' && typeof password == 'string') {
-        let user = {
-            id: userDatabase.length + 1,
-            userName: name,
-            userPwd: password,
-        }
-        userDatabase.push(user)
-        return;
-    } else return;
-}
+// export function createUser(name, password) {
+//     if (typeof name == 'string' && typeof password == 'string') {
+//         let user = {
+//             id: userDatabase.length + 1,
+//             userName: name,
+//             userPwd: password,
+//         }
+//         userDatabase.push(user)
+//         return;
+//     } else return;
+// }
 
 
