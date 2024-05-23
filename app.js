@@ -35,9 +35,7 @@ app.use('/', indRouter);
 
 app.use((err, req, res, next) => {
     console.error(err);
-    res.status(err.status || 500).send({
-        error: {message: err.message || 'Internal server error'}
-    });
+    console.log(`Error code: ${err.status || 500}: ${err.message || 'Internal server error.'}`)
 })
 
 app.listen(port , () => {
