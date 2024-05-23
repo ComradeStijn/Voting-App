@@ -9,14 +9,23 @@ export async function login(req, res, next) {
     }
     try {
         const user = await authenticate(userName, userPwd);
-        if (user) {
+        if (!user) {
+            const err = new Error('Invalid username or password');
+            err.status = 401;
+            return next(err);
+        } else {
             req.session.user = {
                 id: user.id,
                 userName: user.userName,
             };
             next();
         }
-    } catch (err) {next(err)};
+    } catch (err) {
+        if (err.name == 'AuthenticationError') {
+            err.status = 401;
+        }
+        return next(err);
+    }
 }
 
 

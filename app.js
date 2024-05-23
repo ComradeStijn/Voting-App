@@ -29,9 +29,7 @@ app.use(cookieParser());
 
 app.use('/', authRouter);
 
-app.all('/', (req, res) => {
-    res.send('Good');
-})
+
 
 
 app.use((err, req, res, next) => {
