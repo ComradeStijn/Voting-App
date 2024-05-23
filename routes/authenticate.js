@@ -4,7 +4,7 @@ import isAuthenticated, { login, logout } from '../controllers/authenticationCon
 
 const router = express.Router();
 
-router.get('/', isAuthenticated)
+router.use('/', isAuthenticated);
 
 router.get('/login', (req, res) => {
     res.render('login.ejs');
