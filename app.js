@@ -2,11 +2,9 @@ import express from 'express';
 import path from 'path';
 import url from 'url';
 import session from 'express-session';
-import isAuthenticated from './controllers/authenticationController.js';
-import loginRouter from './routes/login.js';
-import logoutRouter from './routes/logout.js';
-import mainRouter from './routes/index.js';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import authRouter from './routes/authenticate.js';
 
 const app = express();
 const port = 3000;
@@ -27,12 +25,21 @@ app.set('view-engine', 'ejs')
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false}));
+app.use(cookieParser());
+
+app.use('/', authRouter);
+
+app.all('/', (req, res) => {
+    res.send('Good');
+})
 
 
-app.get('/', isAuthenticated, mainRouter);
-
-app.use('/login', loginRouter);
-app.use('/logout', logoutRouter);
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(err.status || 500).send({
+        error: {message: err.message || 'Internal server error'}
+    });
+})
 
 app.listen(port , () => {
     console.log(`Voting-app running on port ${port}`);
