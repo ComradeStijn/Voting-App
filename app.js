@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import url from 'url';
 import session from 'express-session';
-import { isAuthenticated } from './controllers/authenticationController.js';
+import isAuthenticated from './controllers/authenticationController.js';
 import loginRouter from './routes/login.js';
 import logoutRouter from './routes/logout.js';
 import bodyParser from 'body-parser';

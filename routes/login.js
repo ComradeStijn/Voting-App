@@ -1,5 +1,5 @@
 import express from 'express';
-import * as authenticateController from '../controllers/authenticationController.js';
+import { login } from '../controllers/authenticationController.js';
 import path from 'path';
 import { viewsDirectory } from '../app.js';
 
@@ -9,6 +9,6 @@ router.get('/', (req, res) => {
     res.sendFile(path.join(viewsDirectory, 'login.html'));
 })
 
-router.post('/', authenticateController.login);
+router.post('/', login);
 
 export default router;
