@@ -22,7 +22,8 @@ const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.join(__dirname, 'static')));
-export const viewsDirectory = path.join(__dirname, 'views');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view-engine', 'ejs')
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false}));
