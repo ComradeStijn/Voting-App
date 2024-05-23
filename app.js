@@ -35,7 +35,10 @@ app.use('/', indRouter);
 
 app.use((err, req, res, next) => {
     console.error(err);
-    console.log(`Error code: ${err.status || 500}: ${err.message || 'Internal server error.'}`)
+    console.log(`Error code: ${err.status || 500}: ${err.message || 'Internal server error.'}`);
+    if (err.status = 401) {
+        res.redirect('/login');
+    }
 })
 
 app.listen(port , () => {
