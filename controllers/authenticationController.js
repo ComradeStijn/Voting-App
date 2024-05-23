@@ -1,5 +1,6 @@
 import authenticate from '../models/userModel.js';
 
+
 export async function login(req, res, next) {
     const { userName, userPwd } = req.body;
     if (!userName || !userPwd) {
@@ -29,7 +30,6 @@ export async function login(req, res, next) {
 }
 
 
-
 export function logout(req, res, next) {
     req.session.destroy((err) => {
         if (err) return next(err);
@@ -37,10 +37,13 @@ export function logout(req, res, next) {
     });
 }
 
+
 export default function isAuthenticated(req, res, next) {
     if (req.session.user) {
+        console.log('User is authenticated:', req.session.user.userName);
         next();
     } else {
+        console.warn('User is not authenticated, Redirecting to login page.');
         res.redirect('/login');
     }
 }
