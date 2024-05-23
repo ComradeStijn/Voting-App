@@ -24,7 +24,13 @@ export async function login(req, res, next) {
             };
             next();
         }
-    } catch (err) {
+    } catch (err) {if (typeof name == 'string' && typeof password == 'string') {
+        for (const user of userDatabase) {
+            if (name == user.userName && password == user.userPwd) {
+                return user;
+            }
+        }
+    } else return;
         if (err.name == 'AuthenticationError') {
             err.status = 401;
         }
