@@ -4,7 +4,7 @@ import isAuthenticated, { login, logout } from '../controllers/authenticationCon
 
 const router = express.Router();
 
-router.all('/', isAuthenticated);
+router.all('/', isAuthenticated);// Will redirect to /login if not authenticated. Else will continue back to app.js
 
 router.get('/login', (req, res) => {
     res.render('login.ejs');
