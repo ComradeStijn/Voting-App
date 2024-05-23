@@ -5,6 +5,7 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/authenticate.js';
+import indRouter from './routes/index.js';
 
 const app = express();
 const port = 3000;
@@ -28,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(cookieParser());
 
 app.use('/', authRouter);
-
+app.use('/', indRouter);
 
 
 
