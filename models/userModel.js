@@ -2,12 +2,26 @@ const userDatabase = [
     { id: 1, userName: 'Stijn', userPwd: 'test'}
 ];
 
-function authenticateUser(name, password) {
-    for (const user of userDatabase) {
-        if (name == user.userName && password == user.userPwd) {
-            return user;
+export default function authenticateUser(name, password) {
+    if (typeof name == 'string' && typeof password == 'string') {
+        for (const user of userDatabase) {
+            if (name == user.userName && password == user.userPwd) {
+                return user;
+            }
         }
-    }
+    } else return;
 }
 
-export default authenticateUser;
+export function createUser(name, password) {
+    if (typeof name == 'string' && typeof password == 'string') {
+        let user = {
+            id: userDatabase.length + 1,
+            userName: name,
+            userPwd: password,
+        }
+        userDatabase.push(user)
+        return;
+    } else return;
+}
+
+
