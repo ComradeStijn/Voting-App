@@ -5,6 +5,7 @@ import session from 'express-session';
 import isAuthenticated from './controllers/authenticationController.js';
 import loginRouter from './routes/login.js';
 import logoutRouter from './routes/logout.js';
+import mainRouter from './routes/index.js';
 import bodyParser from 'body-parser';
 
 const app = express();
@@ -27,9 +28,7 @@ export const viewsDirectory = path.join(__dirname, 'views');
 app.use(bodyParser.urlencoded({ extended: false}));
 
 
-app.get('/', isAuthenticated, (req, res) => {
-    res.send('logged in');
-})
+app.get('/', isAuthenticated, mainRouter);
 
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
