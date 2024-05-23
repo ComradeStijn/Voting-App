@@ -9,7 +9,7 @@ app.set('view-engine', 'ejs');
 app.use(express.static('../static/'));
 
 app.get('/', (req, res) => {
-    res.render('layout.ejs', { title: "test" });
+    res.render('views/test.ejs', { title: 'test ok'});
 })
 
 app.listen(3000);
