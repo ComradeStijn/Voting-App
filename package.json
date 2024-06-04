@@ -1,7 +1,7 @@
 {
   "name": "voting-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Initial commit",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -12,18 +12,6 @@
     "url": "git+https://github.com/ComradeStijn/Voting-App.git"
   },
   "keywords": [],
-  "author": "Stijn Servaes",
-  "license": "UNLICENSED",
-  "bugs": {
-    "url": "https://github.com/ComradeStijn/Voting-App/issues"
-  },
-  "homepage": "https://github.com/ComradeStijn/Voting-App#readme",
-  "dependencies": {
-    "body-parser": "^1.20.2",
-    "cookie-parser": "^1.4.6",
-    "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "express-session": "^1.18.0",
-    "sqlite3": "^5.1.7"
-  }
+  "author": "",
+  "license": "ISC"
 }
