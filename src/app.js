@@ -1,40 +1,26 @@
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import express from 'express';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
+import userRouter from './routes/userRoutes.js';
 
 const app = express();
 const port = 3000;
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// app.use(helmet());
-app.use(cookieParser())
+app.use(helmet());
+app.use(cookieParser());
 app.use(cookieSession({
     name: 'session',
     keys: ['my-secret-key'],
     maxAge: 24 * 60 * 60* 1000
 }));
 
+app.use(express.static(__dirname + '/views'));
 
-app.get('/set-session', (req, res) => {
-    req.session.user = { name: 'john doe' };
-    console.log(req.session.user);
-    if (req.session.user) {
-        res.send('Session cookie has been set');
-    } else {
-        res.send('error');
-    }
-})
-
-app.get('/read-session', (req, res) => {
-    const user = req.session.user;
-    res.json(user || 'No session data');
-})
-
-app.get('/clear-session', (req, res) => {
-    req.session = null;
-    res.send('Session cookie has been cleared');
-})
-
+app.get('/', userRouter);
 
 
 
@@ -44,5 +30,5 @@ app.get('/clear-session', (req, res) => {
 
 app.listen(port, () => {
     console.log(`App listening on ${port}`);
-})
+});
 
