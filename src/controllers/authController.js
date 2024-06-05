@@ -12,8 +12,9 @@ const login = (req, res, next) => {
     }
 };
 
-const authenticate = (req, res, next) => {
-    
+const logout = (req, res, next) => {
+    req.session = null;
+    res.redirect('/');
 }
 
-export { login };
+export { login, logout };
