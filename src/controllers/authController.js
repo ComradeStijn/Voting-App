@@ -6,7 +6,7 @@ const login = (req, res, next) => {
     const user = findUserByToken(token);
     if (user) {
         req.session.user = user;
-        res.status(200).json({ success: true, message: 'Logged in succesfully'});
+        res.status(200).json({ success: true, message: 'Logged in succesfully', redirect: '/index'});
     } else {
         res.status(401).json({ success: false, message: 'Invalid token' });
     }

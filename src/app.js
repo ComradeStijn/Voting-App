@@ -11,7 +11,7 @@ const app = express();
 const port = 3000;
 export const __appdir = path.dirname(fileURLToPath(import.meta.url));
 
-app.use(helmet());
+// app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());

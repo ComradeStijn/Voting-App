@@ -15,8 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const token = document.querySelector('#token').value;
         axios.post('/', { token: token })
             .then(response => {
-                if (response.data.success) {
-                    window.location.href = '/index';
+                console.log(response);
+                if (response.data.redirect) {
+                    return window.location.href = response.data.redirect;
                 } else {
                     alert('not logged in');
                 }
