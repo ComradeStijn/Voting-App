@@ -1,4 +1,4 @@
-import { dirname } from 'path';
+import path from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
 import helmet from 'helmet';
@@ -8,7 +8,7 @@ import userRouter from './routes/userRoutes.js';
 
 const app = express();
 const port = 3000;
-const __dirname = dirname(fileURLToPath(import.meta.url));
+export const __appdir = path.dirname(fileURLToPath(import.meta.url));
 
 app.use(helmet());
 app.use(cookieParser());
@@ -18,9 +18,11 @@ app.use(cookieSession({
     maxAge: 24 * 60 * 60* 1000
 }));
 
-app.use(express.static(__dirname + '/views'));
+app.use(express.static(path.join(__appdir, 'views')));
 
-app.get('/', userRouter);
+
+
+app.use('/', userRouter);
 
 
 
