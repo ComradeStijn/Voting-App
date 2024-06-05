@@ -3,16 +3,13 @@ import path from 'path';
 import { __appdir } from "../app.js";
 const router = express.Router()
 
-router.get('/index', (req, res, next) => {
-    console.log("this is used");
-    res.sendFile('index.html', { root: path.join(__appdir, 'views')});
+router.get('/index', (req, res) => {
+    console.log("Index being rendered");
+    res.render('index');
 });
 
 
-router.use((err, req, res, next) => {
-    console.log('error handler')
-    res.status(err.statusCode).json({ error: err.message });
-})
+
 
 export default router;
 

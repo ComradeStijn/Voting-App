@@ -1,14 +1,18 @@
 // custom-bootstrap.scss
 
 // Override default variables
-$primary: #3490dc;
-$secondary: #ffed4a;
-$success: #38c172;
-$info: #6cb2eb;
-$warning: #ffed4a;
-$danger: #e3342f;
-$light: #f8f9fa;
-$dark: #343a40;
+$white: #ffffff;
+
+$theme-colors: (
+    "light":      #f1dee3,
+    "dark":       #141924,
+    "primary":    #35437c,
+    "secondary":  #2c9158,
+    "info":       #d16727,
+    "success":    #19a15f,
+    "warning":    #e1cb19,
+    "danger":     #ef1e0b,
+);
 
 // Import Bootstrap
 @import "../../../node_modules/bootstrap/scss/bootstrap";

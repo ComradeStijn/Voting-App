@@ -18,8 +18,10 @@ app.use(cookieSession({
     maxAge: 24 * 60 * 60* 1000
 }));
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__appdir, 'views'));
 app.use(express.static(path.join(__appdir, 'views')));
-
+app.use('/bootstrap', express.static(path.join(__appdir, '../node_modules/bootstrap/dist')))
 
 
 app.use('/', userRouter);
@@ -27,7 +29,10 @@ app.use('/', userRouter);
 
 
 
-
+app.use((err, req, res , next) => {
+    console.log('General error handler');
+    res.status(err.statusCode || 500).json({ error: err.message });
+});
 
 
 app.listen(port, () => {
