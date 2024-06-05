@@ -5,12 +5,15 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
 import userRouter from './routes/userRoutes.js';
+import authRouter from './routes/authenticationRoutes.js';
 
 const app = express();
 const port = 3000;
 export const __appdir = path.dirname(fileURLToPath(import.meta.url));
 
 app.use(helmet());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cookieParser());
 app.use(cookieSession({
     name: 'session',
@@ -21,10 +24,12 @@ app.use(cookieSession({
 app.set('view engine', 'ejs');
 app.set('views', path.join(__appdir, 'views'));
 app.use(express.static(path.join(__appdir, 'views')));
-app.use('/bootstrap', express.static(path.join(__appdir, '../node_modules/bootstrap/dist')))
+app.use('/bootstrap', express.static(path.join(__appdir, '../node_modules/bootstrap/dist')));
+app.use('/node_modules', express.static(path.join(__appdir, '../node_modules')));
 
 
-app.use('/', userRouter);
+app.use('/', authRouter);
+app.use('/index', userRouter);
 
 
 

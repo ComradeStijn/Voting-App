@@ -3,7 +3,7 @@ import path from 'path';
 import { __appdir } from "../app.js";
 const router = express.Router()
 
-router.get('/index', (req, res) => {
+router.get('/', (req, res) => {
     console.log("Index being rendered");
     res.render('index');
 });

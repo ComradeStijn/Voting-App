@@ -3,14 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
     <%- include('partials/bootstrap.ejs') %>
+    <script type="module" src="./index.js" defer></script>
 </head>
-<body>
+<body class="bg-white">
     <%- include('partials/header.ejs') %>
     <main>
-        
+        <div class="container px-4 py-5">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-lg-5 d-none d-lg-block">
+                    <img class="img-fluid w-100 rounded-4" src="images/logo.png" alt="logo">
+                </div>
+
+
+                <div class="col-lg-1"></div>
+                <div class="col-12 col-lg-6 d-flex flex-column">
+                    <h1 class="display-1 text-center">Voting App</h1>
+                    <h3 class="text-center mb-5">By Stijn Servaes</h3>
+                    <p class="lead">
+                        This application was created by myself for the purposes of learning how to create my first full-stack web application.
+                        Users can log-in via a user-token provided before hand.
+                        It is powered using Bootstrap 5, Node JS and Express JS.
+                    </p>
+
+
+                    <!-- Login form -->
+                    <form id="login-form" class="px-5 py-5 mt-2 bg-secondary rounded-5 d-flex flex-column">
+                        <div id="form-error-response"></div>
+                        <h2 class="mb-3 text-white">Log-in</h2>
+                        <div class="mb-3 form-floating">
+                            <input type="text" name="token" id="token" class="form-control form-control-lg" placeholder="test" required>
+                            <label for="token" class="form-label">User-token</label>
+                            <div class="form-text text-white mt-2">This token is provided to you via mail</div>
+                        </div>
+                        <button type="submit" class="btn btn-warning px-5 py-2 btn-lg fw-bolder">Log-in</button>
+                    </form>
+
+
+                    
+                </div>
+            </div>
+        </div>
     </main>
     <%- include('partials/footer.ejs') %>
+    <script src="/node_modules/axios/dist/axios.min.js"></script>
 </body>
 </html>
+
+ 
