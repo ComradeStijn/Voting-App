@@ -6,7 +6,7 @@ const retrieveForms = (req, res, next) => {
 
     const user_id = req.session.user.id;
     console.log(`Retrieve forms for user: ${user_id}`);
-    // Retrieve how many fotes the user has currently, since this could change whilst the session is going on.
+    // Retrieve how many Votes the user has currently, since this could change whilst the session is going on.
     const totalVotes = findUserByToken(req.session.user.token).votes; 
 
     const forms = modelRetrieve(user_id);
@@ -20,4 +20,21 @@ const retrieveForms = (req, res, next) => {
     }
 };
 
-export { retrieveForms };
+
+
+
+
+const submitForm = (req, res, next) => {
+    console.log('Submit forms api invoked');
+
+    const user_id = req.session.user.id;
+    console.log(`Submit form for user: ${user_id}`);
+
+    const data = req.body;
+    if (Object.keys(data).length) {
+        console.log(data);
+    }
+
+}
+
+export { retrieveForms, submitForm };

@@ -34,9 +34,12 @@ function reloadForms() {
     reloadButton.children[1].textContent = "loading...";
     formContainer.innerHTML = "";
     
+    let totalVotes = 0;
+    
     axios.get('/api/forms')
         .then(response => {
             const data = response.data;
+            totalVotes = data.totalVotes,
             console.log(data);
             for (const form of data.forms) {
                 renderForm(form, data.totalVotes);
@@ -53,8 +56,16 @@ function reloadForms() {
                 console.log('Error: ', error.message);
             }
             if (error.response.status === 404) {
-                console.log('Error: ' + error.response.data.message);
+                console.log('Error: ', error.response.data.message);
             }
+        })
+        .finally(() => {
+            const allSubmitButtons = document.querySelectorAll('.form-submit-button');
+            allSubmitButtons.forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    submitButton(event, totalVotes)
+                });
+            });
         });
 
     reloadButton.firstElementChild.classList.add('d-none');
@@ -62,23 +73,52 @@ function reloadForms() {
 };
 
 
+function submitButton(event, totalVotes) {
+    const button = event.target;
+    const formElement = button.parentNode;
+
+    const submittedVote = { formID: formElement.getAttribute('id') };
+    let actualVotes = 0;
+
+    const optionDivs = formElement.querySelectorAll('.option-div');
+    for (const div of optionDivs) {
+        const selectElement = div.querySelector('select');
+        submittedVote[selectElement.id] = selectElement.value;
+        actualVotes += Number(selectElement.value);
+    } 
+
+    if (totalVotes !== actualVotes) {
+        console.log('Votes submitted does not equal proxyvotes');
+        const errorDiv = formElement.querySelector('.card-error');
+        errorDiv.classList.add('alert', 'alert-danger', 'mt-3');
+        errorDiv.textContent = `You did not submit the correct amount of votes. You have ${totalVotes} votes in total.`;
+    } else {
+        console.log(submittedVote);
+
+        axios.post('/api/forms', submittedVote)
+            .then(response => {
+                console.log('Response', response.data);
+                // Remove card
+            })
+            // In catch display an error
+    }
+}
 
 
 
 
 
 
-
-// The below function creates and renders the following element in formContainer
+// The below function creates and renders the following form card in formContainer
 // 
 // 
 // 
 // 
-// <article class="card col-md-6 col-12">
+//                  <article class="card col-md-6 col-12">
 //                     <div class="card-body">
 //                         <h5 class="card-title fw-bold text-center">President</h5>
 //                         <form action="#" class="card-body">
-//                             <div class="mb-3">
+//                             <div class="mb-3 option-div">
 //                                 <label for="candidate1" class="form-label">Anakin Skywalker</label>
 //                                 <select class="form-select col-6" name="candidate1" id="candidate1">
 //                                     <option value="0" selected>0</option>
@@ -86,7 +126,7 @@ function reloadForms() {
 //                                     <option value="2">2</option>
 //                                 </select>
 //                             </div>
-//                             <div class="mb-3">
+//                             <div class="mb-3 option-div">
 //                                 <label for="candidate2" class="form-label">Obi-Wan Kenobi</label>
 //                                 <select name="candidate2" id="candidate2" class="form-select">
 //                                     <option value="0" selected>0</option>
@@ -95,6 +135,7 @@ function reloadForms() {
 //                                 </select>
 //                             </div>
 //                             <button type="button" class="btn btn-outline-primary">Submit</button>
+//                              <div class="card-error"></div>
 //                         </form>
 //                     </div>
 //                 </article>
@@ -115,11 +156,12 @@ function renderForm(form, totalVotes) {
 
     const formElement = document.createElement('form');
     formElement.classList.add('card-body');
+    formElement.setAttribute('id', form.id);
     cardBody.appendChild(formElement);
 
     for (const option in form.choices) {
         const divElement = document.createElement('div');
-        divElement.classList.add('mb-3');
+        divElement.classList.add('mb-3', 'option-div');
         formElement.appendChild(divElement);
 
         const label = document.createElement('label');
@@ -144,9 +186,14 @@ function renderForm(form, totalVotes) {
 
     const submitButton = document.createElement('button');
     submitButton.setAttribute('type', 'button');
-    submitButton.classList.add('btn', 'btn-outline-primary');
+    submitButton.classList.add('btn', 'btn-outline-primary', 'form-submit-button');
     submitButton.textContent = `Submit for ${form.title}`;
     formElement.appendChild(submitButton);
+
+    // Error container for form validation
+    const errorDiv = document.createElement('div');
+    errorDiv.classList.add('card-error');
+    formElement.appendChild(errorDiv);
     
 };
 
