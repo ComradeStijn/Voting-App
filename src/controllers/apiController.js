@@ -40,7 +40,9 @@ const submitForm = (req, res, next) => {
         // If the amount of choices in the form does not line up with the submitted votes per choice in the request
         if (Object.keys(form.choices).length !== Object.keys(requestData.choices).length) {
             console.log("Form choices do not equal request choices");
-            res.status(400).json({ message: 'Amount of choices do not line up with database'});
+            const error = new Error('Error in apiController.js/submitForm. Request choices do not line up with form choices.')
+            error.statusCode = 400;
+            next(error);
         }
 
         try {
