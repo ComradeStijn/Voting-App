@@ -1,5 +1,4 @@
 import express from "express";
-import path from 'path';
 import { __appdir } from "../app.js";
 const router = express.Router()
 

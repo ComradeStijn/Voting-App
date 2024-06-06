@@ -14,12 +14,15 @@
             <header class="row align-items-center">
                 <h1 class="display-4 col-lg-6 text-center mb-4 mb-lg-0">Voting Forms</h1>
                 <div class="col-12 col-lg-6">
-                    <button class="btn btn-primary btn-lg float-end">
+                    <button class="btn btn-primary btn-lg float-end" id="btn-reload-form">
                         <span class="spinner-border spinner-border-sm me-3 d-none" aria-hidden="true"></span>
                         <span role="status">Reload Forms</span>
                     </button>
                 </div>
             </header>
+            <div class="row" id="form-container">
+
+            </div>
         </div>
     </main>
     <%- include('partials/footer.ejs') %>

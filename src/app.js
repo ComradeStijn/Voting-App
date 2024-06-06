@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import cookieSession from 'cookie-session';
 import userRouter from './routes/userRoutes.js';
 import authRouter from './routes/authenticationRoutes.js';
+import apiRouter from './routes/apiRouter.js';
 
 const app = express();
 const port = 3000;
@@ -30,6 +31,7 @@ app.use('/node_modules', express.static(path.join(__appdir, '../node_modules')))
 
 app.use('/', authRouter);
 app.use('/index', userRouter);
+app.use('/api', apiRouter);
 
 
 
