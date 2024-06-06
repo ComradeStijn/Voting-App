@@ -76,33 +76,42 @@ function reloadForms() {
 function submitButton(event, totalVotes) {
     const button = event.target;
     const formElement = button.parentNode;
+    const errorDiv = formElement.querySelector('.card-error');
+    button.disabled = true;
 
-    const submittedVote = { formID: formElement.getAttribute('id') };
+    const submittedVote = { formID: formElement.getAttribute('id'), choices: {}};
     let actualVotes = 0;
 
     const optionDivs = formElement.querySelectorAll('.option-div');
     for (const div of optionDivs) {
         const selectElement = div.querySelector('select');
-        submittedVote[selectElement.id] = selectElement.value;
+        submittedVote.choices[selectElement.id] = selectElement.value;
         actualVotes += Number(selectElement.value);
     } 
 
     if (totalVotes !== actualVotes) {
         console.log('Votes submitted does not equal proxyvotes');
-        const errorDiv = formElement.querySelector('.card-error');
+        errorDiv.innerHTML = ""
         errorDiv.classList.add('alert', 'alert-danger', 'mt-3');
         errorDiv.textContent = `You did not submit the correct amount of votes. You have ${totalVotes} votes in total.`;
+        button.disabled = false;
     } else {
         console.log(submittedVote);
+
+
 
         axios.post('/api/forms', submittedVote)
             .then(response => {
                 console.log('Response', response.data);
                 // Remove card
+            }).catch(error => {
+                console.log(error);
+                errorDiv.classList.add('alert', 'alert-danger', 'mt-3');
+                errorDiv.textContent = `Error ${error.response.status} ${error.response.statusText}: ${error.response.data.message}`;
+                button.disabled = false;
             })
-            // In catch display an error
-    }
-}
+    };
+};
 
 
 
