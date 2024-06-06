@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const parentElement = document.querySelector(element);
         parentElement.innerHTML = '';
         const errorElement = document.createElement('div'); 
-        errorElement.classList.add('btn', 'btn-danger', 'text-white', 'mb-3');
+        errorElement.classList.add('alert', 'alert-danger', 'mb-3');
         errorElement.style.width = '100%';
         errorElement.textContent = `Login failed: ${error.response.data.message}`;
         parentElement.appendChild(errorElement);
