@@ -1,13 +1,13 @@
 const formArray = [
-    {id: 1, title: 'First title', body: 'First Body'},
-    {id: 2, title: 'Second Second', body: 'Second Body'},
-    {id: 3, title: 'Third Third', body: 'Third Body'}
+    {id: 1, title: 'President', choices: {option1: 'Anakin Skywalker', option2: 'Obi-Wan Kenobi'}},
+    {id: 2, title: 'Vice-President', choices: {option1: 'Padmé Amidala', option2: 'Sheev Palpatine', option3: 'Finis Valorum'}},
+    {id: 3, title: 'Motion to create a Grand Army of the Republic', choices: {option1: 'Yes', option2: 'No'}}
 ];
 
 const userJunctionForm = [
     {user_id: 1, form_id: 1, voted: false},
     {user_id: 1, form_id: 2, voted: false},
-    {user_id: 1, form_id: 3, voted: true}
+    {user_id: 1, form_id: 3, voted: false}
 ];
 
 
@@ -26,5 +26,7 @@ function retrieveForms(user_id) {
     };
     return;
 };
+
+
 
 export default retrieveForms;

@@ -4,7 +4,7 @@ const router = express.Router()
 
 router.get('/', (req, res) => {
     console.log("User.ejs being rendered");
-    res.render('user');
+    res.render('user', { name: req.session.user.name});
 });
 
 
