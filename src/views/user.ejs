@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Voting</title>
+    <%- include('partials/bootstrap.ejs') %>
+    <script type="module" src="./user.js" defer></script>
+</head>
+<body class="bg-white">
+    <%- include('partials/header.ejs') %>
+    <main>
+        <div class="container-lg bg-success-subtle p-5 mt-0 mt-lg-5 rounded">
+            <header class="row align-items-center">
+                <h1 class="display-4 col-lg-6 text-center mb-4 mb-lg-0">Voting Forms</h1>
+                <div class="col-12 col-lg-6">
+                    <button class="btn btn-primary btn-lg float-end">
+                        <span class="spinner-border spinner-border-sm me-3 d-none" aria-hidden="true"></span>
+                        <span role="status">Reload Forms</span>
+                    </button>
+                </div>
+            </header>
+        </div>
+    </main>
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>
