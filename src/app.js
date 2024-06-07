@@ -9,7 +9,7 @@ import authRouter from './routes/authenticationRoutes.js';
 import apiRouter from './routes/apiRouter.js';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 export const __appdir = path.dirname(fileURLToPath(import.meta.url));
 
 // app.use(helmet());
