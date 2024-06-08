@@ -19,7 +19,7 @@ const testForm = {
 
 
 function addVotes(formData, user_id) {
-    const choices = JSON.parse(formData.choices);
+    const choices = formData.choices;
     const formID = formData.formID;
     const junctQuery = `
         SELECT *
