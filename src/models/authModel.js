@@ -24,17 +24,16 @@ export function deleteUserById(id) {
     }
 }
 
-createUser('Kean Ooi', 456456456, 1)
-
 export function findUserByToken(token) {
     const findQuery = 'SELECT * FROM users WHERE token = ?';
     const transformedToken = token.toString();
     try {
-        return user = db.prepare(findQuery).get(transformedToken);
+        return db.prepare(findQuery).get(transformedToken);
     } catch (err) {
         console.error(`Error ${err.code}: ${err.message}`);
     }
 }
+
 
 export function findAllUsers() {
     const selectQuery = 'SELECT * FROM users';
@@ -49,7 +48,7 @@ export function findAllUsers() {
 export function createUser(name, token, votes) {
     const insertQuery = 'INSERT INTO users (name, token, votes) VALUES (?,?,?)';
     try {
-        return db.prepare(insertQuery).run(name, token, votes);
+        return db.prepare(insertQuery).run(name.toString(), token.toString(), votes);
     } catch (err) {
         console.error(`Error ${err.code}: ${err.message}`);
     }

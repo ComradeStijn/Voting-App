@@ -40,7 +40,7 @@ app.use('/node_modules', express.static(path.join(__appdir, '../node_modules')))
 
 
 app.use('/', authRouter);
-app.use('/index', userRouter);
+app.use('/', userRouter);
 app.use('/api', apiRouter);
 
 

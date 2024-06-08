@@ -1,9 +1,11 @@
 import express from "express";
 import { __appdir } from "../app.js";
+import { isAuthenticated } from "../controllers/authController.js";
 const router = express.Router()
 
-router.get('/', (req, res) => {
-    console.log("User.ejs being rendered");
+// For /
+
+router.get('/user', isAuthenticated, (req, res) => {
     res.render('user', { name: req.session.user.name});
 });
 
