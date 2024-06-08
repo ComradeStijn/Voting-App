@@ -1,5 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
+import Database from 'better-sqlite3';
 import express from 'express';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
@@ -11,8 +12,17 @@ import apiRouter from './routes/apiRouter.js';
 const app = express();
 const port = process.env.PORT || 3000;
 export const __appdir = path.dirname(fileURLToPath(import.meta.url));
+export const __dbModels = path.join(__appdir,'models', 'database.db');
 
-// app.use(helmet());
+// DB creation
+export const db = new Database(__dbModels);
+db.pragma('journal_mode = WAL');
+createDatabase();
+
+
+
+
+app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -47,3 +57,46 @@ app.listen(port, () => {
     console.log(`App listening on ${port}`);
 });
 
+
+
+
+
+
+
+function createDatabase() {
+    const query = `
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            token TEXT NOT NULL,
+            votes INTEGER NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS forms (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            option1 TEXT,
+            option2 TEXT,
+            option3 TEXT,
+            option4 TEXT,
+            option5 TEXT,
+            votes1 TEXT,
+            votes2 TEXT,
+            votes3 TEXT,
+            votes4 TEXT,
+            votes5 text
+        );
+
+        CREATE TABLE IF NOT EXISTS userJunctionForm (
+            user_id INTEGER NOT NULL,
+            form_id INTEGER NOT NULL,
+            voted INTEGER NOT NULL
+        );
+    `;
+    try {
+        db.exec(query);
+        console.log('Created database');
+    } catch (err) {
+        console.error(`Error ${err.code}: ${err.message}`);
+    }
+}
