@@ -6,27 +6,35 @@ const userArray = [
 ];
 
 
-// export function findUserByToken(token) {
-//     const user =  userArray.find((user) => {
-//         return user.token === token;
-//     });
-//     return user;
-// }
-
-
-export function findUserByToken(token) {
-    const findQuery = 'SELECT * FROM users WHERE token = ?';
-    const transformedToken = token.toString();
+export function modifyUserById(id, property, newValue) {
+    const updateQuery = `UPDATE users SET ${property} = ? WHERE id = ?`;
     try {
-        const user = db.prepare(findQuery).get(transformedToken);
-        return;
+        return db.prepare(updateQuery).run(newValue, id);
     } catch (err) {
         console.error(`Error ${err.code}: ${err.message}`);
     }
 }
 
+export function deleteUserById(id) {
+    const deleteQuery = 'DELETE FROM users WHERE id = ?';
+    try {
+        return db.prepare(deleteQuery).run(id);
+    } catch (err) {
+        console.error(`Error ${err.code}: ${err.message}`);
+    }
+}
 
+createUser('Kean Ooi', 456456456, 1)
 
+export function findUserByToken(token) {
+    const findQuery = 'SELECT * FROM users WHERE token = ?';
+    const transformedToken = token.toString();
+    try {
+        return user = db.prepare(findQuery).get(transformedToken);
+    } catch (err) {
+        console.error(`Error ${err.code}: ${err.message}`);
+    }
+}
 
 export function findAllUsers() {
     const selectQuery = 'SELECT * FROM users';
