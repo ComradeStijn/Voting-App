@@ -135,11 +135,17 @@ function testResetJunction() {
         SET voted = 0
         WHERE (user_id, form_id) = (?,?)
     `;
+    const query2 = `
+        UPDATE forms
+        SET votes = '{"option1":0,"option2":0}'
+    `;
 
     db.prepare(query).run(1,1);
     db.prepare(query).run(1,2);
     db.prepare(query).run(1,3);
+    db.prepare(query2).run();
 }
+
 
 
 export { retrieveFormsByUserID, retrieveFormByFormID, addVotes }
