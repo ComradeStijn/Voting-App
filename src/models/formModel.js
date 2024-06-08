@@ -31,6 +31,12 @@ function addVotes(formData, user_id) {
     }
 }
 
+// function tomake(formData, user_id) {
+//     const { formID, choices } = formData;
+//     const junctForm = 
+
+
+// }
 
 function retrieveFormsByUserID(user_id) {
     const query = `
@@ -40,20 +46,25 @@ function retrieveFormsByUserID(user_id) {
         WHERE j.user_id = ?
         AND j.voted = 0
     `;
-    const retrieved = db.prepare(query).all(user_id)
-    const toReturn = [];
 
-    for (const row of retrieved) {
-        const transformedRow = {
-            id: row.id,
-            title: row.title,
-            choices: JSON.parse(row.choices),
-            votes: JSON.parse(row.votes)
+    try {
+        const retrieved = db.prepare(query).all(user_id)
+        const toReturn = [];
+
+        for (const row of retrieved) {
+            const transformedRow = {
+                id: row.id,
+                title: row.title,
+                choices: JSON.parse(row.choices),
+                votes: JSON.parse(row.votes)
+            }
+            toReturn.push(transformedRow);
         }
-        toReturn.push(transformedRow);
+        return toReturn;
+    } catch (error) {
+        console.error(`Error ${error.code}: ${error.message}`);
     }
-    return toReturn
-};
+}
 
 
 function retrieveFormByFormID(form_id) {
@@ -62,12 +73,17 @@ function retrieveFormByFormID(form_id) {
         FROM forms
         WHERE id = ?
     `;
-    const retrieved = db.prepare(query).get(form_id);
-    return {
-        id: retrieved.id,
-        title: retrieved.title,
-        choices: JSON.parse(retrieved.choices),
-        votes: JSON.parse(retrieved.votes),
+
+    try {
+        const retrieved = db.prepare(query).get(form_id);
+        return {
+            id: retrieved.id,
+            title: retrieved.title,
+            choices: JSON.parse(retrieved.choices),
+            votes: JSON.parse(retrieved.votes),
+        }
+    } catch (err) {
+        console.error(`Error ${err.code}: ${err.message}`);
     }
 }
 
