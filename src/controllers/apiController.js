@@ -30,7 +30,7 @@ const submitForm = (req, res, next) => {
 
     if (Object.keys(requestData).length) {
         const formID = Number(requestData.formID);
-        const form = retrieveFormByFormID(formID)[0];
+        const form = retrieveFormByFormID(formID);
 
 
         // If the amount of choices in the form does not line up with the submitted votes per choice in the request

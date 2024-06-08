@@ -1,3 +1,5 @@
+import { db } from "../app.js";
+
 const formArray = [
     {id: 0},
     {id: 1, title: 'President', choices: {option1: 'Anakin Skywalker', option2: 'Obi-Wan Kenobi'}, votes: {option1: 0, option2: 0}},
@@ -8,7 +10,6 @@ const formArray = [
 const userJunctionForm = [
     {user_id: 1, form_id: 1, voted: false},
     {user_id: 1, form_id: 2, voted: false},
-    {user_id: 1, form_id: 3, voted: false}
 ];
 
 // Post request
@@ -31,27 +32,48 @@ function addVotes(formData, user_id) {
 }
 
 
-
-
 function retrieveFormsByUserID(user_id) {
-    // Using the junction table, return the non-voted forms for user
-    const nonVotedFormIDs = userJunctionForm.filter((junction) => {
-        return junction.user_id === user_id && !junction.voted;
-    })
-        .map(junction => junction.form_id);
-    
-    const forms = formArray.filter(form => {
-        return nonVotedFormIDs.includes(form.id);
-    });
-    if (forms.length) {
-        return forms;
-    };
-    return;
+    const query = `
+        SELECT f.id, f.title, f.choices, f.votes
+        FROM forms AS f INNER JOIN userJunctionForm AS j
+        ON f.id = j.form_id
+        WHERE j.user_id = ?
+        AND j.voted = 0
+    `;
+    const retrieved = db.prepare(query).all(user_id)
+    const toReturn = [];
+
+    for (const row of retrieved) {
+        const transformedRow = {
+            id: row.id,
+            title: row.title,
+            choices: JSON.parse(row.choices),
+            votes: JSON.parse(row.votes)
+        }
+        toReturn.push(transformedRow);
+    }
+    return toReturn
 };
 
+
 function retrieveFormByFormID(form_id) {
-    return formArray.filter((form) => form.id === form_id);
+    const query = `
+        SELECT *
+        FROM forms
+        WHERE id = ?
+    `;
+    const retrieved = db.prepare(query).get(form_id);
+    return {
+        id: retrieved.id,
+        title: retrieved.title,
+        choices: JSON.parse(retrieved.choices),
+        votes: JSON.parse(retrieved.votes),
+    }
 }
+
+
+
+
 
 
 export { retrieveFormsByUserID, retrieveFormByFormID, addVotes }
