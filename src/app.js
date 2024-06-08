@@ -75,16 +75,8 @@ function createDatabase() {
         CREATE TABLE IF NOT EXISTS forms (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
-            option1 TEXT,
-            option2 TEXT,
-            option3 TEXT,
-            option4 TEXT,
-            option5 TEXT,
-            votes1 TEXT,
-            votes2 TEXT,
-            votes3 TEXT,
-            votes4 TEXT,
-            votes5 text
+            choices TEXT,
+            votes TEXT
         );
 
         CREATE TABLE IF NOT EXISTS userJunctionForm (
