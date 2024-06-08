@@ -1,6 +1,9 @@
 # Custom Files #
 ################
 node_modules/
+*.db
+*.db-shm
+*.db-wal
 
 
 # Compiled source #
