@@ -20,7 +20,6 @@ const testForm = {
 
 function addVotes(formData, user_id) {
     const choices = JSON.parse(formData.choices);
-    console.log('choices: ', choices)
     const formID = formData.formID;
     const junctQuery = `
         SELECT *
@@ -48,20 +47,14 @@ function addVotes(formData, user_id) {
     try {
         // Retrieve current data from junction table and form table for form and user
         const junctionToUpdate = db.prepare(junctQuery).get(user_id, formID);
-        console.log('junctionToUpdate', junctionToUpdate)
         const currentData = db.prepare(formQuery).get(formID);
         const currentVotes = JSON.parse(currentData.votes);
-        console.log('Current Votes', currentVotes)
 
         // If the user has not voted yet. Update the votes total with the new choices
         // and execute a sql query to update the votes in the form and to set the junction voted to true
         if (!junctionToUpdate.voted) {
             for (const option in choices) {
-                console.log('option', option)
-                console.log('currentVotes[option]', currentVotes[option]);
-                console.log('Number(choices[option])', Number(choices[option]));
                 currentVotes[option] += Number(choices[option]);
-                console.log(currentVotes);
             };
 
             // Ensure that updating the votes in form and voted status in junction is done together
@@ -72,7 +65,7 @@ function addVotes(formData, user_id) {
                 prepare2.run(user_id, formID);
             });
             transaction();
-            
+            console.log(`User ${user_id} has voted for form ${formID}`);
         } else {
             const error =  new Error("User already voted for this form");
             error.statusCode = 400;
