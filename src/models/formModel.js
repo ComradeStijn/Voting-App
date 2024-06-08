@@ -12,31 +12,78 @@ const userJunctionForm = [
     {user_id: 1, form_id: 2, voted: false},
 ];
 
-// Post request
-// { formID: '1', choices: { option1: '3', option2: '0' } }
+const testForm = {
+    formID: 1,
+    choices: '{"option1":5,"option2":3}'
+}
+
 
 function addVotes(formData, user_id) {
-    const { formID, choices } = formData;
-    const junctionToUpdate = userJunctionForm.find(junction => user_id == junction.user_id && formID == junction.form_id )
+    const choices = JSON.parse(formData.choices);
+    console.log('choices: ', choices)
+    const formID = formData.formID;
+    const junctQuery = `
+        SELECT *
+        FROM userJunctionForm
+        WHERE user_id = ?
+        AND form_id = ?
+    `;
+    const formQuery = `
+        SELECT *
+        FROM forms
+        WHERE id = ?
+    `;
+    const updateFormQuery = `
+        UPDATE forms
+        SET votes = ?
+        WHERE id = ?
+    `;
 
-    if (!junctionToUpdate.voted) {
-        for (const index in choices) {
-            formArray[formID].votes[index] += Number(choices[index]);
-        };
-        junctionToUpdate.voted = true;
-    } else {
-        const error =  new Error("User already voted for this form");
-        error.statusCode = 400;
-        throw error;
+    const updateJunctionQuery = `
+        UPDATE userJunctionForm
+        SET voted = 1
+        WHERE (user_id, form_id) = (?, ?)
+    `;
+
+    try {
+        // Retrieve current data from junction table and form table for form and user
+        const junctionToUpdate = db.prepare(junctQuery).get(user_id, formID);
+        console.log('junctionToUpdate', junctionToUpdate)
+        const currentData = db.prepare(formQuery).get(formID);
+        const currentVotes = JSON.parse(currentData.votes);
+        console.log('Current Votes', currentVotes)
+
+        // If the user has not voted yet. Update the votes total with the new choices
+        // and execute a sql query to update the votes in the form and to set the junction voted to true
+        if (!junctionToUpdate.voted) {
+            for (const option in choices) {
+                console.log('option', option)
+                console.log('currentVotes[option]', currentVotes[option]);
+                console.log('Number(choices[option])', Number(choices[option]));
+                currentVotes[option] += Number(choices[option]);
+                console.log(currentVotes);
+            };
+
+            // Ensure that updating the votes in form and voted status in junction is done together
+            const prepare1 = db.prepare(updateFormQuery);
+            const prepare2 = db.prepare(updateJunctionQuery);
+            const transaction = db.transaction(() => {
+                prepare1.run(JSON.stringify(currentVotes), formID);
+                prepare2.run(user_id, formID);
+            });
+            transaction();
+            
+        } else {
+            const error =  new Error("User already voted for this form");
+            error.statusCode = 400;
+            throw error;
+        }
+    } catch (err) {
+        console.error(`Error ${err.code}: ${err.message}`);
+        throw err;
     }
 }
 
-// function tomake(formData, user_id) {
-//     const { formID, choices } = formData;
-//     const junctForm = 
-
-
-// }
 
 function retrieveFormsByUserID(user_id) {
     const query = `
@@ -89,7 +136,17 @@ function retrieveFormByFormID(form_id) {
 
 
 
+function testResetJunction() {
+    const query = `
+        UPDATE userJunctionForm
+        SET voted = 0
+        WHERE (user_id, form_id) = (?,?)
+    `;
 
+    db.prepare(query).run(1,1);
+    db.prepare(query).run(1,2);
+    db.prepare(query).run(1,3);
+}
 
 
 export { retrieveFormsByUserID, retrieveFormByFormID, addVotes }
