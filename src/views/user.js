@@ -107,7 +107,11 @@ function submitButton(event, totalVotes) {
             }).catch(error => {
                 console.log(error);
                 errorDiv.classList.add('alert', 'alert-danger', 'mt-3');
-                errorDiv.textContent = `Error ${error.response.status} ${error.response.statusText}: ${error.response.data.message}`;
+                if (error.response) {
+                    errorDiv.textContent = `Error ${error.response.status} ${error.response.statusText}: ${error.response.data.message}`;
+                } else {
+                    errorDiv.textContent = `Error 500 Internal Server Error. Server could not be reached. Contact administrator.`
+                }
                 button.disabled = false;
             })
     };
