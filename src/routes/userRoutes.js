@@ -9,9 +9,7 @@ router.get('/user', isAuthenticated, (req, res) => {
     res.render('user', { name: req.session.user.name});
 });
 
-router.get('/admin', (req, res) => {
-    res.render('admin');
-});
+
 
 
 

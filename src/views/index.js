@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
+    document.querySelector('#nav-home').classList.add('active');
+    renderAdminLink();
     // Set Nav button home active
     document.querySelector("#nav-home").classList.add("active");
     
@@ -49,3 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+function renderAdminLink() {
+    const navLinks = document.querySelector('#header-navlink');
+    const aElement = document.createElement('a');
+    aElement.setAttribute('id', 'nav-admin');
+    aElement.setAttribute('href', '#');
+    aElement.classList.add('nav-link');
+    aElement.innerHTML = '<h3>Admin</h3>';
+    navLinks.append(aElement);
+}

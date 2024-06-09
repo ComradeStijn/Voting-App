@@ -15,6 +15,11 @@ router.get('/', (req, res) => {
 
 router.post('/', login);
 
-router.get('/logout', logout)
+router.get('/logout', logout);
+
+
+router.get('/adminLogin', (req, res) => {
+    res.render('adminLogin');
+});
 
 export default router;

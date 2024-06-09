@@ -4,6 +4,7 @@ const navLinks = document.querySelector('#header-navlink');
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('#nav-home').classList.add('active');
     renderLogoutLink();
     reloadForms();
     reloadButton.addEventListener('click', reloadForms);
