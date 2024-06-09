@@ -1,27 +1,10 @@
 const formContainer = document.querySelector('#form-container');
 const reloadButton = document.querySelector('#btn-reload-form');
-
-const testForm = {
-    id: 1,
-    title: "President",
-    choices: {
-        option1: 'Anakin Skywalker',
-        option2: 'Obi-Wan Kenobi'
-    }
-}
-
-const testForm2 = {
-    id: 2,
-    title: "Vice-President",
-    choices: {
-        option1: 'Padmé Amidala',
-        option2: 'Sheev Palpatine',
-        option3: 'Velorum'
-    }
-}
+const navLinks = document.querySelector('#header-navlink');
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    renderLogoutLink();
     reloadForms();
     reloadButton.addEventListener('click', reloadForms);
 
@@ -211,3 +194,11 @@ function renderForm(form, totalVotes) {
 };
 
 
+function renderLogoutLink() {
+    const aElement = document.createElement('a');
+    aElement.setAttribute('id', 'nav-logout');
+    aElement.setAttribute('href', '/logout');
+    aElement.classList.add('nav-link');
+    aElement.innerHTML = '<h3>Logout</h3>';
+    navLinks.append(aElement);
+}
