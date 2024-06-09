@@ -12,6 +12,7 @@ export function modifyUserById(id, property, newValue) {
         return db.prepare(updateQuery).run(newValue, id);
     } catch (err) {
         console.error(`Error ${err.code}: ${err.message}`);
+        throw err;
     }
 }
 
@@ -21,6 +22,7 @@ export function deleteUserById(id) {
         return db.prepare(deleteQuery).run(id);
     } catch (err) {
         console.error(`Error ${err.code}: ${err.message}`);
+        throw err;
     }
 }
 
@@ -31,6 +33,7 @@ export function findUserByToken(token) {
         return db.prepare(findQuery).get(transformedToken);
     } catch (err) {
         console.error(`Error ${err.code}: ${err.message}`);
+        throw err;
     }
 }
 
@@ -42,17 +45,11 @@ export function findAllUsers() {
         return users;
     } catch (err) {
         console.error(`Error ${err.code}: ${err.message}`);
+        throw err;
     }
 }
 
-export function createUser(name, token, votes) {
-    const insertQuery = 'INSERT INTO users (name, token, votes) VALUES (?,?,?)';
-    try {
-        return db.prepare(insertQuery).run(name.toString(), token.toString(), votes);
-    } catch (err) {
-        console.error(`Error ${err.code}: ${err.message}`);
-    }
-}
+
 
 
 

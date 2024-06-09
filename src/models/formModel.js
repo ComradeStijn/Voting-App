@@ -95,6 +95,7 @@ function retrieveFormsByUserID(user_id) {
         return toReturn;
     } catch (error) {
         console.error(`Error ${error.code}: ${error.message}`);
+        throw error;
     }
 }
 
@@ -116,6 +117,7 @@ function retrieveFormByFormID(form_id) {
         }
     } catch (err) {
         console.error(`Error ${err.code}: ${err.message}`);
+        throw err;
     }
 }
 
