@@ -43,6 +43,7 @@ const submitForm = (req, res, next) => {
 
         try {
             addVotes(requestData, user_id);
+            res.sendStatus(200);
         } catch (error) {
             next(error);
         }
