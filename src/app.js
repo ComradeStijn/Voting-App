@@ -1,5 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
+import 'dotenv/config'
 import Database from 'better-sqlite3';
 import express from 'express';
 import helmet from 'helmet';
