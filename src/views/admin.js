@@ -1,24 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#nav-home').classList.add('active');
     renderLogoutLink();
+    refreshForms();
+    
 
-    axios.get('/api/adminforms')
-        .then(response => {
-            renderAllForms(response.data);
-        })
-        .catch(error => {
-            if (error.response) {
-                console.log("Reponse status: ", error.response.status);
-                console.log("Response data: ", error.response.data);
-            } else if (error.request) {
-                console.log('No response received: ', error.request);
-            } else {
-                console.log('Error: ', error.message);
-            }
-            if (error.response.status === 404) {
-                console.log('Error: ', error.response.data.message);
-            }
-        })
+    document.querySelector('#refresh-forms').addEventListener('click', () => {
+        refreshForms();
+    })
 })
 
 
@@ -33,7 +21,27 @@ function renderLogoutLink() {
     navLinks.append(aElement);
 }
 
+function refreshForms() {
+    document.querySelector('#form-container').innerHTML = '';
 
+    axios.get('/api/adminforms')
+    .then(response => {
+        renderAllForms(response.data);
+    })
+    .catch(error => {
+        if (error.response) {
+            console.log("Reponse status: ", error.response.status);
+            console.log("Response data: ", error.response.data);
+        } else if (error.request) {
+            console.log('No response received: ', error.request);
+        } else {
+            console.log('Error: ', error.message);
+        }
+        if (error.response.status === 404) {
+            console.log('Error: ', error.response.data.message);
+        }
+    })
+}
 
 
 function renderAllForms(forms) {
