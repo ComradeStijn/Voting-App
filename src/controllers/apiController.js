@@ -1,4 +1,4 @@
-import { retrieveFormsByUserID, retrieveFormByFormID, addVotes }  from '../models/formModel.js';
+import { retrieveFormsByUserID, retrieveFormByFormID, addVotes, retrieveAllForms }  from '../models/formModel.js';
 import { findUserByToken } from '../models/authModel.js';
 
 const retrieveForms = (req, res, next) => {
@@ -16,7 +16,15 @@ const retrieveForms = (req, res, next) => {
     }
 };
 
-
+const adminRetrieveForms = (req, res, next) => {
+    const retrieved = retrieveAllForms();
+    if (retrieved) {
+        res.json(retrieved);
+    } else {
+        console.log('Forms not found');
+        res.status(404).json({ message: 'No forms found' });
+    }
+}
 
 
 
@@ -51,7 +59,7 @@ const submitForm = (req, res, next) => {
     }
 }
 
-export { retrieveForms, submitForm };
+export { retrieveForms, submitForm, adminRetrieveForms };
 
 // Post request
 // { formID: '1', choices: { option1: '3', option2: '0' } }

@@ -1,7 +1,7 @@
 import express from 'express';
 import { __appdir } from '../app.js';
-import { retrieveForms, submitForm } from '../controllers/apiController.js';
-import { isAuthenticated } from '../controllers/authController.js';
+import { adminRetrieveForms, retrieveForms, submitForm } from '../controllers/apiController.js';
+import { isAdmin, isAuthenticated } from '../controllers/authController.js';
 
 const router = express.Router();
 
@@ -10,5 +10,7 @@ const router = express.Router();
 router.get('/forms', isAuthenticated, retrieveForms);
 
 router.post('/forms', isAuthenticated, submitForm);
+
+router.get('/adminforms', isAdmin, adminRetrieveForms);
 
 export default router;

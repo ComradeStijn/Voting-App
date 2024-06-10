@@ -9,7 +9,29 @@
 </head>
 <body>
     <%- include('partials/header.ejs') %>
+    <main class="container mt-0 mt-lg-5 p-5 border border-primary-subtle border-opacity-25 rounded-5">
 
+        <!-- Admin nav -->
+        <ul class="nav nav-tabs nav-fill mb-3">
+            <li class="nav-item">
+                <a href="#" class="nav-link active">Current votes</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Change users</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Change forms</a>
+            </li>
+        </ul>
+
+
+        <div class="row mb-5 px-3">
+            <button type="button" class="col-12 col-lg-2 btn btn-primary fw-bold">Refresh results</button>
+        </div>
+
+        <!-- Form-container -->
+        <div id="form-container" class="container-fluid row g-3"></div>
+    </main>
     <%- include('partials/footer.ejs') %>
 </body>
 </html>

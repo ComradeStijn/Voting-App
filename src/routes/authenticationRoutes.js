@@ -31,7 +31,7 @@ router.get('/adminlogin', (req, res) => {
 router.post('/adminlogin', adminlogin)
 
 router.get('/admin', isAdmin, (req, res) => {
-    res.sendStatus(200);
+    res.render('admin');
 })
 
 export default router;

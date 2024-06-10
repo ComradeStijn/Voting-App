@@ -121,6 +121,17 @@ function retrieveFormByFormID(form_id) {
     }
 }
 
+function retrieveAllForms() {
+    const query = `SELECT * FROM forms`;
+    try {
+        const retrieved = db.prepare(query).all();
+        return retrieved;
+    } catch (err) {
+        console.error(`Error ${err.code}: ${err.message}`);
+        throw err;
+    }
+
+}
 
 
 function testResetJunction() {
@@ -141,4 +152,4 @@ function testResetJunction() {
 }
 
 
-export { retrieveFormsByUserID, retrieveFormByFormID, addVotes }
+export { retrieveFormsByUserID, retrieveFormByFormID, addVotes, retrieveAllForms }
