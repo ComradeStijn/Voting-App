@@ -50,7 +50,7 @@ function renderAllUsers(users) {
             <td class="user-token"></td>
             <td class="user-votes"></td>
             <td class="">
-                <button class="btn btn-warning fw-bold me-2 button-proxies">Change proxies</button>
+                <button class="btn btn-warning fw-bold me-2 mb-2 mb-lg-0 button-proxies">Change proxies</button>
                 <button class="btn btn-danger fw-bold text-white button-delete">Delete user</button>
             </td>
     `;
