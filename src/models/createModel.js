@@ -12,6 +12,7 @@ export function createForm(title, choices) {
             votes[index] = 0;
         }
 
+        // Will create the form whilst updating the many-to-many junction table
         const userList = db.prepare('SELECT id FROM users').all().map(row => row.id);
         const formQuery = db.prepare(`INSERT INTO forms (title, choices, votes) VALUES (?, ?, ?)`);
         const junctionQuery = db.prepare(`INSERT INTO userJunctionForm (user_id, form_id, voted) VALUES (?, ?, 0)`);
@@ -38,6 +39,7 @@ export function createUser(name, token, votes) {
     try {
         const formArray = db.prepare('SELECT id FROM forms').all().map(row => row.id);
 
+        // Will create the form whilst updating the many-to-many junction table
         const userQuery = db.prepare(`INSERT INTO users (name, token, votes) VALUES (?, ?, ?)`);
         const junctionQuery = db.prepare(`INSERT INTO userJunctionForm (user_id, form_id, voted) VALUES (?, ?, 0)`);
 
