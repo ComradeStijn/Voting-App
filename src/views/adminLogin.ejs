@@ -5,11 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
     <%- include('partials/bootstrap.ejs') %>
-    <script type="module", src="./admin.js" defer></script>
+    <script type="module", src="./adminLogin.js" defer></script>
 </head>
 <body>
     <%- include('partials/header.ejs') %>
-    <main></main>
+    <main class="container mt-5">
+        <!-- Login form -->
+        <div class="row">
+            <div class="col-3"></div>
+            <form id="login-form" class="col-12 col-lg-6 p-5 bg-secondary rounded-5" style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);">
+                <div id="form-error-response"></div>
+                <h2 class="mb-3 text-white">Admin</h2>
+                <div class="mb-3 form-floating">
+                    <input type="text" name="username" id="username" class="form-control form-control-lg" placeholder="test" required>
+                    <label for="username" class="form-label">Username</label>
+                </div>
+                <div class="mb-3 form-floating">
+                    <input type="password" name="password" id="password" class="form-control form-control-lg" placeholder="test" required>
+                    <label for="password" class="form-label">Password</label>
+                </div>
+                <button type="submit" class="btn btn-warning px-5 py-2 btn-lg fw-bolder w-100">Log-in</button>
+            </form>
+            <div class="col-3"></div>
+        </div>
+    </main>
     <%- include('partials/footer.ejs') %>
 </body>
 </html>
