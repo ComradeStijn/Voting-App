@@ -1,5 +1,5 @@
 import express from 'express';
-import { login, logout, adminlogin, isAdmin } from '../controllers/authController.js';
+import { login, logout, adminlogin } from '../controllers/authController.js';
 
 const router = express.Router();
 
@@ -30,8 +30,6 @@ router.get('/adminlogin', (req, res) => {
 
 router.post('/adminlogin', adminlogin)
 
-router.get('/admin', isAdmin, (req, res) => {
-    res.render('admin');
-})
+
 
 export default router;

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Change Users</title>
     <%- include('partials/bootstrap.ejs') %>
-    <script type="module" src="./admin.js" defer></script>
+    <script type="module" src="./adminusers.js" defer></script>
 </head>
 <body>
     <%- include('partials/header.ejs') %>
@@ -14,23 +14,24 @@
         <!-- Admin nav -->
         <ul class="nav nav-tabs nav-fill mb-3">
             <li class="nav-item">
-                <a href="#" class="nav-link active">Current votes</a>
+                <a href="/admin" class="nav-link">Current votes</a>
             </li>
             <li class="nav-item">
-                <a href="/adminusers" class="nav-link">Change users</a>
+                <a href="#" class="nav-link active">Change users</a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">Change forms</a>
             </li>
         </ul>
 
-
         <div class="row mb-5 px-3">
-            <button id="refresh-forms" type="button" class="col-12 col-lg-2 btn btn-primary fw-bold">Refresh results</button>
+            <button type="button" id="refresh-forms" class="col-12 col-lg-2 btn btn-primary fw-bold">Refresh users</button>
         </div>
 
-        <!-- Form-container -->
-        <div id="form-container" class="container-fluid row g-3"></div>
+        <!-- User-container -->
+        <div id="user-container" class="container-fluid row g-3">
+
+        </div>
     </main>
     <%- include('partials/footer.ejs') %>
 </body>
