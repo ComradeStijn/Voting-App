@@ -1,5 +1,5 @@
 import { retrieveFormsByUserID, retrieveFormByFormID, addVotes, retrieveAllForms }  from '../models/formModel.js';
-import { findUserByToken } from '../models/authModel.js';
+import { findUserByToken, retrieveAllUsers } from '../models/authModel.js';
 
 const retrieveForms = (req, res, next) => {
     const user_id = req.session.user.id;
@@ -15,18 +15,6 @@ const retrieveForms = (req, res, next) => {
         res.status(404).json({ message: 'No forms found'});
     }
 };
-
-const adminRetrieveForms = (req, res, next) => {
-    const retrieved = retrieveAllForms();
-    if (retrieved) {
-        res.json(retrieved);
-    } else {
-        console.log('Forms not found');
-        res.status(404).json({ message: 'No forms found' });
-    }
-}
-
-
 
 const submitForm = (req, res, next) => {
     console.log('Submit forms api invoked');
@@ -59,15 +47,27 @@ const submitForm = (req, res, next) => {
     }
 }
 
-export { retrieveForms, submitForm, adminRetrieveForms };
 
-// Post request
-// { formID: '1', choices: { option1: '3', option2: '0' } }
+const adminRetrieveForms = (req, res, next) => {
+    const retrieved = retrieveAllForms();
+    if (retrieved) {
+        res.json(retrieved);
+    } else {
+        console.log('Forms not found');
+        res.status(404).json({ message: 'No forms found' });
+    }
+}
 
-// Form in Database
-// {
-//   id: 1,
-//   title: 'President',
-//   choices: { option1: 'Anakin Skywalker', option2: 'Obi-Wan Kenobi' },
-//   votes: { option1: 0, option2: 0 }
-// }
+const adminRetrieveUsers = (req, res, next) => {
+    const retrieved = retrieveAllUsers();
+    if (retrieved) {
+        res.json(retrieved);
+    } else {
+        console.log('Users not found');
+        res.status(400).json({ message: 'No users found' });
+    }
+}
+
+
+export { retrieveForms, submitForm, adminRetrieveForms, adminRetrieveUsers };
+

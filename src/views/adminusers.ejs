@@ -24,12 +24,29 @@
             </li>
         </ul>
 
-        <div class="row mb-5 px-3">
-            <button type="button" id="refresh-forms" class="col-12 col-lg-2 btn btn-primary fw-bold">Refresh users</button>
+        <div class="row mb-5 px-3 d-flex gap-3">
+            <button type="button" id="refresh-users" class="col-12 col-lg-2 btn btn-primary fw-bold">Refresh users</button>
+            <button type="button" id="new-user" class="col-12 col-lg-2 btn btn-primary fw-bold">New user</button>
         </div>
 
         <!-- User-container -->
-        <div id="user-container" class="container-fluid row g-3">
+        <div id="user-container" class="container-fluid row">
+
+            <!-- User Table -->
+            <table class="table table-bordered border-primary-subtle w-auto mx-auto">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Token</th>
+                        <th>Votes</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
 
         </div>
     </main>

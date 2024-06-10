@@ -38,7 +38,7 @@ export function findUserByToken(token) {
 }
 
 
-export function findAllUsers() {
+export function retrieveAllUsers() {
     const selectQuery = 'SELECT * FROM users';
     try {
         const users = db.prepare(selectQuery).all();
