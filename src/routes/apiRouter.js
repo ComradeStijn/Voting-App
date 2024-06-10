@@ -1,6 +1,6 @@
 import express from 'express';
 import { __appdir } from '../app.js';
-import { adminRetrieveForms, adminRetrieveUsers, retrieveForms, submitForm, setProxyOfUser } from '../controllers/apiController.js';
+import { adminRetrieveForms, adminRetrieveUsers, retrieveForms, submitForm, adminSetProxyOfUser } from '../controllers/apiController.js';
 import { isAdmin, isAuthenticated } from '../controllers/authController.js';
 
 const router = express.Router();
@@ -15,6 +15,6 @@ router.get('/adminforms', isAdmin, adminRetrieveForms);
 
 router.get('/adminusers', isAdmin, adminRetrieveUsers);
 
-router.post('/setproxy', isAdmin, setProxyOfUser)
+router.post('/setproxy', isAdmin, adminSetProxyOfUser)
 
 export default router;

@@ -1,20 +1,6 @@
 import { db } from "../app.js";
 
-// { id: 1, name: 'Stijn Servaes', token: '123123123', votes: 3 }
 
-// {
-//     id: 1,
-//     title: 'President',
-//     choices: '{"option1":"Anakin Skywalker","option2":"Obi-Wan Kenobi"}',
-//     votes: '{"option1":3,"option2":0}'
-// }
-
-const testChoices = [
-    {choices: '{"option1":"Anakin Skywalker","option2":"Obi-Wan Kenobi"}'},
-    {choices: '{"option1":"John Doe","option2":"Jane Doe","option3":"Gert Verhulst"}'},
-    {choices: '{"option1":"Stijn Servaes","option2":"No"}'},
-    {choices: '{"option1":"Yes","option2":"No"}'},
-]
 
 
 

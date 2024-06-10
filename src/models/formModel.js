@@ -1,22 +1,5 @@
 import { db } from "../app.js";
 
-const formArray = [
-    {id: 0},
-    {id: 1, title: 'President', choices: {option1: 'Anakin Skywalker', option2: 'Obi-Wan Kenobi'}, votes: {option1: 0, option2: 0}},
-    {id: 2, title: 'Vice-President', choices: {option1: 'Padmé Amidala', option2: 'Sheev Palpatine', option3: 'Finis Valorum'}, votes: {option1: 0, option2: 0, option3: 0}},
-    {id: 3, title: 'Motion to create a Grand Army of the Republic', choices: {option1: 'Yes', option2: 'No'}, votes: {option1: 0, option2: 0}}
-];
-
-const userJunctionForm = [
-    {user_id: 1, form_id: 1, voted: false},
-    {user_id: 1, form_id: 2, voted: false},
-];
-
-const testForm = {
-    formID: 1,
-    choices: '{"option1":5,"option2":3}'
-}
-
 
 function addVotes(formData, user_id) {
     const choices = formData.choices;

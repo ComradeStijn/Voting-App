@@ -68,7 +68,7 @@ const adminRetrieveUsers = (req, res, next) => {
     }
 }
 
-const setProxyOfUser = (req, res, next) => {
+const adminSetProxyOfUser = (req, res, next) => {
     const user_id = Number(req.body.user_id);
     const newVotes = Number(req.body.newValue);
     try {
@@ -82,5 +82,5 @@ const setProxyOfUser = (req, res, next) => {
 }
 
 
-export { retrieveForms, submitForm, adminRetrieveForms, adminRetrieveUsers, setProxyOfUser };
+export { retrieveForms, submitForm, adminRetrieveForms, adminRetrieveUsers, adminSetProxyOfUser };
 
