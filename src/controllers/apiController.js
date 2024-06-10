@@ -1,5 +1,5 @@
 import { retrieveFormsByUserID, retrieveFormByFormID, addVotes, retrieveAllForms }  from '../models/formModel.js';
-import { findUserByToken, retrieveAllUsers } from '../models/authModel.js';
+import { findUserByToken, retrieveAllUsers, setProxy } from '../models/authModel.js';
 
 const retrieveForms = (req, res, next) => {
     const user_id = req.session.user.id;
@@ -68,6 +68,19 @@ const adminRetrieveUsers = (req, res, next) => {
     }
 }
 
+const setProxyOfUser = (req, res, next) => {
+    const user_id = Number(req.body.user_id);
+    const newVotes = Number(req.body.newValue);
+    try {
+        setProxy(user_id, newVotes);
+        res.sendStatus(200);
+    } catch (err) {
+        console.log(`Error ${err.code}: ${err.message}`);
+        res.sendStatus(400);
+    }
+    
+}
 
-export { retrieveForms, submitForm, adminRetrieveForms, adminRetrieveUsers };
+
+export { retrieveForms, submitForm, adminRetrieveForms, adminRetrieveUsers, setProxyOfUser };
 

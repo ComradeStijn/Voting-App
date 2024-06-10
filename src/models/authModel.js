@@ -50,6 +50,15 @@ export function retrieveAllUsers() {
 }
 
 
-
+export function setProxy(user_id, newProxy) {
+    const query = `UPDATE users SET votes=? WHERE id=?`
+    try {
+        db.prepare(query).run(newProxy, user_id);
+        return;
+    } catch (err) {
+        console.error(`Error ${err.code}: ${err.message}`);
+        throw err;
+    }
+}
 
 

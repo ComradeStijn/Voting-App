@@ -45,7 +45,7 @@ function refreshUsers() {
 function renderAllUsers(users) {
     const tableBody = document.querySelector('tbody');
     const baseTemplate = `
-            <th></th>
+            <th class="user-id"></th>
             <td class="user-name"></td>
             <td class="user-token"></td>
             <td class="user-votes"></td>
@@ -58,12 +58,70 @@ function renderAllUsers(users) {
         console.log(user);
         const tr = document.createElement('tr');
         tr.innerHTML = baseTemplate;
-        tr.querySelector('th').textContent = user.id;
+        tr.querySelector('.user-id').textContent = user.id;
         tr.querySelector('.user-name').textContent = user.name;
         tr.querySelector('.user-token').textContent = user.token;
         tr.querySelector('.user-votes').textContent = user.votes;
+
+        // Set data attribute to allow change proxy input field to have a placeholder
+        tr.querySelector('.button-proxies').setAttribute('data-user-votes', user.votes);
         tableBody.append(tr);
     }
 
 
+    document.querySelectorAll('.button-proxies').forEach(button => button.addEventListener('click', (e) => proxyButton(e, button)));
+}
+
+function proxyButton(e, button) {
+    e.preventDefault()
+    const parentTR = button.closest('tr');
+    const proxyTD = parentTR.querySelector('.user-votes');
+
+    const user_id = parentTR.querySelector('.user-id').textContent;
+    proxyTD.innerHTML = `
+        <div class="input-group">
+            <input type="number" class="form-control" id="new-proxy" placeholder="#" min="1" max="5" required>
+            <button class="btn btn-outline-secondary" type="button">✓</button>
+        </div>
+    `;
+    proxyTD.querySelector('input').value = button.dataset.userVotes;
+
+    const submitButton = proxyTD.querySelector('button');
+    submitButton.addEventListener('click', () => {
+        const newProxyValue = proxyTD.querySelector('#new-proxy').value || 1;
+        postRequestWithNewProxy(user_id, newProxyValue, proxyTD);
+    })
+}
+
+function postRequestWithNewProxy(user_id, newValue, td) {
+    console.log(newValue)
+    axios.post('/api/setproxy', { user_id, newValue })
+        .then(response => {
+            if (response.status === 200) {
+                refreshUsers();
+            }
+        })
+        .catch(error => {
+            if (error.response) {
+                console.log("Reponse status: ", error.response.status);
+                console.log("Response data: ", error.response.data);
+            } else if (error.request) {
+                console.log('No response received: ', error.request);
+            } else {
+                console.log('Error: ', error.message);
+            }
+            renderAlert();
+        })
+}
+
+
+
+function renderAlert() {
+    const template = `
+        <div class="mt-3 alert alert-danger alert-dismissible fade show" role="alert">
+            <span>Error. Please try again.</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+    document.querySelector('#warning-container').innerHTML = template;
 }
