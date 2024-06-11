@@ -6,6 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('#refresh-users').addEventListener('click', () => {
         refreshUsers();
+    });
+
+    document.querySelector('#new-user').addEventListener('click', () => {
+        document.querySelector('#user-form-toggle').classList.toggle('d-none');
+    });
+    
+    document.querySelector('#create-user-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        userFormSubmit(e);
     })
 });
 
@@ -27,19 +36,7 @@ function refreshUsers() {
         .then(response => {
             renderAllUsers(response.data);
         })
-        .catch(error => {
-            if (error.response) {
-                console.log("Reponse status: ", error.response.status);
-                console.log("Response data: ", error.response.data);
-            } else if (error.request) {
-                console.log('No response received: ', error.request);
-            } else {
-                console.log('Error: ', error.message);
-            }
-            if (error.response.status === 404) {
-                console.log('Error: ', error.response.data.message);
-            }
-        })
+        .catch(error => axiosErrorHandler(error));
 }
 
 function renderAllUsers(users) {
@@ -75,6 +72,12 @@ function renderAllUsers(users) {
     document.querySelectorAll('.button-delete').forEach(button => button.addEventListener('click', (e) => postDeleteUser(e, button)));
 }
 
+
+
+
+
+
+
 function proxyButton(e, button) {
     e.preventDefault()
     const parentTR = button.closest('tr');
@@ -104,30 +107,14 @@ function postRequestWithNewProxy(user_id, newValue, td) {
                 refreshUsers();
             }
         })
-        .catch(error => {
-            if (error.response) {
-                console.log("Reponse status: ", error.response.status);
-                console.log("Response data: ", error.response.data);
-            } else if (error.request) {
-                console.log('No response received: ', error.request);
-            } else {
-                console.log('Error: ', error.message);
-            }
-            renderAlert();
-        })
+        .catch(error => axiosErrorHandler(error));
 }
 
 
 
-function renderAlert() {
-    const template = `
-        <div class="mt-3 alert alert-danger alert-dismissible fade show" role="alert">
-            <span>Error. Please try again.</span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    `;
-    document.querySelector('#warning-container').innerHTML = template;
-}
+
+
+
 
 
 function postDeleteUser(e, button) {
@@ -141,15 +128,64 @@ function postDeleteUser(e, button) {
                 refreshUsers();
             }
         })
-        .catch(error => {
-            if (error.response) {
-                console.log("Reponse status: ", error.response.status);
-                console.log("Response data: ", error.response.data);
-            } else if (error.request) {
-                console.log('No response received: ', error.request);
-            } else {
-                console.log('Error: ', error.message);
-            }
-            renderAlert();
-        })
+        .catch(error => axiosErrorHandler(error));
 }
+
+
+
+
+
+
+
+
+function userFormSubmit(event) {
+    const form = event.target;
+    const nameInput = form.querySelector('#newuser-name');
+    const voteInput = form.querySelector('#newuser-votes');
+    const nameValue = nameInput.value;
+    const voteValue = voteInput.value;
+
+    axios.post('/api/createuser', { nameValue, voteValue})
+        .then(response => {
+            if (response.status === 200) {
+                refreshUsers();
+                nameInput.value = null;
+                voteInput.value = null;
+            }
+        })
+        .catch(error => axiosErrorHandler(error));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function renderAlert() {
+    const template = `
+        <div class="mt-3 alert alert-danger alert-dismissible fade show" role="alert">
+            <span>Error. Please try again.</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+    document.querySelector('#warning-container').innerHTML = template;
+}
+
+function axiosErrorHandler(error) {
+    if (error.response) {
+        console.log("Reponse status: ", error.response.status);
+        console.log("Response data: ", error.response.data);
+    } else if (error.request) {
+        console.log('No response received: ', error.request);
+    } else {
+        console.log('Error: ', error.message);
+    }
+    renderAlert();
+}
+

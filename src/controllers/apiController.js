@@ -1,6 +1,6 @@
 import { retrieveFormsByUserID, retrieveFormByFormID, addVotes, retrieveAllForms }  from '../models/formModel.js';
-import { findUserByToken, retrieveAllUsers, setProxy } from '../models/authModel.js';
-import { deleteUser } from '../models/createModel.js';
+import { checkUniqueToken, findUserByToken, retrieveAllUsers, setProxy } from '../models/authModel.js';
+import { createUser, deleteUser } from '../models/createModel.js';
 
 const retrieveForms = (req, res, next) => {
     const user_id = req.session.user.id;
@@ -91,8 +91,41 @@ const adminDeleteUser = (req, res, next) => {
         console.log(`Error ${err.code}: ${err.message}`);
         res.sendStatus(400);
     }
-
 }
 
-export { retrieveForms, submitForm, adminRetrieveForms, adminRetrieveUsers, adminSetProxyOfUser, adminDeleteUser };
+const adminCreateUser = (req, res, next) => {
+    const user_name = req.body.nameValue;
+    const user_votes = Number(req.body.voteValue);
+    while (true) {
+        const user_token = random10Digit();
+        if (checkUniqueToken(user_token)) {
+            try {
+                createUser(user_name, user_token, user_votes);
+                res.sendStatus(200);
+            } catch (err) {
+                console.log(`Error ${err.code}: ${err.message}`);
+                res.sendStatus(400);
+            }
+        }
+        break;
+    }
+}
+
+function random10Digit() {
+    let digits = '';
+    for (let i = 0; i < 10; i++) {
+        digits += Math.floor(Math.random() * 10).toString();
+    }
+    return Number(digits);
+}
+
+export { 
+    retrieveForms, 
+    submitForm, 
+    adminRetrieveForms, 
+    adminRetrieveUsers, 
+    adminSetProxyOfUser, 
+    adminDeleteUser, 
+    adminCreateUser 
+};
 

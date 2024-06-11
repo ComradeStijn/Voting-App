@@ -58,3 +58,12 @@ export function setProxy(user_id, newProxy) {
 }
 
 
+export function checkUniqueToken(token) {
+    const query = 'SELECT token FROM users';
+    const result = db.prepare(query).all()
+        .map(user => Number(user.token));
+    if (result.includes(token)) {
+        return false;
+    } else return true;
+}
+

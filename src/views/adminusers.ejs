@@ -29,6 +29,23 @@
             <button type="button" id="new-user" class="col-12 col-lg-2 btn btn-primary fw-bold">New user</button>
         </div>
 
+        <!-- Create user form -->
+        <div id="user-form-toggle" class="row d-flex justify-content-center mb-3 d-none">
+            <form id="create-user-form" class="col-12 col-lg-6 p-4 border border-primary-subtle rounded-3" style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);">
+                <div id="form-error-response"></div>
+                <h4 class="mb-3 text-primary">New User</h2>
+                <div class="mb-3 form-floating">
+                    <input type="text" name="newuser-name" id="newuser-name" class="form-control" placeholder="test" required>
+                    <label for="newuser-name" class="form-label">Name</label>
+                </div>
+                <div class="mb-3 form-floating">
+                    <input type="number" name="newuser-votes" id="newuser-votes" class="form-control" placeholder="test" min="0" max="5" required>
+                    <label for="newuser-votes" class="form-label">Votes</label>
+                </div>
+                <button type="submit" class="btn btn-warning px-5 py-2 btn-lg fw-bolder w-100">Create user</button>
+            </form>
+        </div>
+
         <!-- User-container -->
         <div id="user-container" class="container-fluid row">
 
