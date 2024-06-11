@@ -7,6 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('#refresh-forms').addEventListener('click', () => {
         refreshForms();
+    });
+
+    document.querySelector('#new-form').addEventListener('click', () => {
+        document.querySelector('#form-form-toggle').classList.toggle('d-none');
+    });
+
+    document.querySelector('#create-form-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        formFormSubmit(e);
     })
 });
 
@@ -46,7 +55,6 @@ function renderAllForms(forms) {
     `;
 
     for (const form of forms) {
-        console.log(form);
         const tr = document.createElement('tr');
         tr.innerHTML = baseTemplate;
         tr.querySelector('.form-id').textContent = form.id;
@@ -85,6 +93,31 @@ function postDeleteForm(e, button) {
         .catch(error => axiosErrorHandler(error));
 }
 
+
+
+
+function formFormSubmit(event) {
+    const form = event.target;
+    const optionInputs = Array.from(form.querySelectorAll('.options'));
+    const title = form.querySelector('#newform-name').value;
+    const formData = { title };
+
+    const optionObject = {}
+    for (const option of optionInputs) {
+        if (option.value !== '') {
+            optionObject[option.id] = option.value;
+        }
+    }
+    formData['choices'] = JSON.stringify(optionObject);
+
+    axios.post('/api/createform', formData)
+        .then(response => {
+            if (response.status === 200) {
+                refreshForms();
+            }
+        })
+        .catch(error => axiosErrorHandler(error));
+}
 
 
 

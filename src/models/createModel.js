@@ -1,12 +1,8 @@
 import { db } from "../app.js";
 
-
-
-
-
 export function createForm(title, choices) {
     try {
-        const parsedChoices = JSON.parse(choices.choices);
+        const parsedChoices = JSON.parse(choices);
         const votes = {};
         for (const index in parsedChoices) {
             votes[index] = 0;
@@ -18,7 +14,7 @@ export function createForm(title, choices) {
         const junctionQuery = db.prepare(`INSERT INTO userJunctionForm (user_id, form_id, voted) VALUES (?, ?, 0)`);
 
         const transaction = db.transaction(() => {
-            const insertedRow = formQuery.run(title, choices.choices , JSON.stringify(votes));
+            const insertedRow = formQuery.run(title, choices, JSON.stringify(votes));
             for (const user_id of userList) {
                 junctionQuery.run(user_id, insertedRow.lastInsertRowid);
             }

@@ -29,6 +29,43 @@
             <button type="button" id="new-form" class="col-12 col-lg-2 btn btn-primary fw-bold">New form</button>
         </div>
 
+        <!-- Create user form -->
+        <div id="form-form-toggle" class="row d-flex justify-content-center mb-3 d-none">
+            <form id="create-form-form" class="col-12 col-lg-6 p-4 border border-primary-subtle rounded-3" style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);">
+                <div id="form-error-response"></div>
+                <h4 class="mb-3 text-primary">New Form</h2>
+                <div class="mb-5 form-floating">
+                    <input type="text" name="newform-name" id="newform-name" class="form-control" placeholder="test" required>
+                    <label for="newform-name" class="form-label">Title</label>
+                    <div class="form-text text-primary mt-2">Required</div>
+                </div>
+
+                <div class="mb-3 form-floating">
+                    <input type="text" name="option1" id="option1" class="form-control options" placeholder="test" required>
+                    <label for="option1" class="form-label">Option 1</label>
+                    <div class="form-text text-primary mt-2">Required</div>
+                </div>
+                <div class="mb-3 form-floating">
+                    <input type="text" name="option1" id="option2" class="form-control options" placeholder="test" required>
+                    <label for="option2" class="form-label">Option 2</label>
+                    <div class="form-text text-primary mt-2">Required</div>
+                </div>
+                <div class="mb-3 form-floating">
+                    <input type="text" name="option3" id="option3" class="form-control options" placeholder="test">
+                    <label for="option3" class="form-label">Option 3</label>
+                </div>
+                <div class="mb-3 form-floating">
+                    <input type="text" name="option4" id="option4" class="form-control options" placeholder="test">
+                    <label for="option4" class="form-label">Option 4</label>
+                </div>
+                <div class="mb-3 form-floating">
+                    <input type="text" name="option5" id="option5" class="form-control options" placeholder="test">
+                    <label for="option5" class="form-label">Option 5</label>
+                </div>
+                <button type="submit" class="btn btn-warning px-5 py-2 btn-lg fw-bolder w-100">Create form</button>
+            </form>
+        </div>
+
         <!-- User-container -->
         <div id="user-container" class="container-fluid row">
 

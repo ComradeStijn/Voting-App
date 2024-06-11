@@ -1,6 +1,6 @@
 import express from 'express';
 import { __appdir } from '../app.js';
-import { adminRetrieveForms, adminRetrieveUsers, retrieveForms, submitForm, adminSetProxyOfUser, adminDeleteUser, adminCreateUser, adminDeleteForm } from '../controllers/apiController.js';
+import { adminRetrieveForms, adminRetrieveUsers, retrieveForms, submitForm, adminSetProxyOfUser, adminDeleteUser, adminCreateUser, adminDeleteForm, adminCreateForm } from '../controllers/apiController.js';
 import { isAdmin, isAuthenticated } from '../controllers/authController.js';
 
 const router = express.Router();
@@ -22,5 +22,7 @@ router.post('/deleteuser', isAdmin, adminDeleteUser);
 router.post('/createuser', isAdmin, adminCreateUser);
 
 router.post('/deleteform', isAdmin, adminDeleteForm);
+
+router.post('/createform', isAdmin, adminCreateForm);
 
 export default router;
