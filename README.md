@@ -18,6 +18,11 @@
    ```js
    ADMIN_USERNAME=
    ADMIN_PASSWORD=
+   PORT=
+   ```
+4. Use the following command to start the server
+   ```
+   npm start
    ```
 
 
