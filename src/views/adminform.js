@@ -88,6 +88,16 @@ function postDeleteForm(e, button) {
 
 
 
+function renderAlert() {
+    const template = `
+        <div class="mt-3 alert alert-danger alert-dismissible fade show" role="alert">
+            <span>Error. Please try again.</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+    document.querySelector('#warning-container').innerHTML = template;
+}
+
 function axiosErrorHandler(error) {
     if (error.response) {
         console.log("Reponse status: ", error.response.status);
