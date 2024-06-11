@@ -114,6 +114,10 @@ function formFormSubmit(event) {
         .then(response => {
             if (response.status === 200) {
                 refreshForms();
+                form.querySelector('#newform-name').value = '';
+                for (const option of optionInputs) {
+                    option.value = '';
+                }
             }
         })
         .catch(error => axiosErrorHandler(error));
