@@ -1,7 +1,7 @@
 {
   "name": "voting-app",
   "version": "1.0.0",
-  "description": "Initial commit",
+  "description": "LICENSE: AGPL-3.0-or-later",
   "main": "index.js",
   "type": "module",
   "scripts": {
