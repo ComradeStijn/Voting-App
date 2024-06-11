@@ -59,3 +59,21 @@ export function createUser(name, token, votes) {
     }
 }
 
+export function deleteUser(user_id) {
+    try {
+        const userQuery = db.prepare('DELETE FROM users WHERE id=?');
+        const junctionQuery = db.prepare('DELETE FROM userJunctionForm WHERE user_id=?');
+
+        const transaction = db.transaction(() => {
+            userQuery.run(user_id);
+            junctionQuery.run(user_id);
+        });
+        transaction();
+        console.log(`User ${user_id} has been deleted.`);
+        return;
+    } catch (err) {
+        console.error(`Error ${err.code}: ${err.message}`);
+        throw err;
+    }
+}
+

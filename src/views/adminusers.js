@@ -68,8 +68,11 @@ function renderAllUsers(users) {
         tableBody.append(tr);
     }
 
-
+    // Change proxies
     document.querySelectorAll('.button-proxies').forEach(button => button.addEventListener('click', (e) => proxyButton(e, button)));
+
+    // Delete button
+    document.querySelectorAll('.button-delete').forEach(button => button.addEventListener('click', (e) => postDeleteUser(e, button)));
 }
 
 function proxyButton(e, button) {
@@ -86,6 +89,7 @@ function proxyButton(e, button) {
     `;
     proxyTD.querySelector('input').value = button.dataset.userVotes;
 
+    // 
     const submitButton = proxyTD.querySelector('button');
     submitButton.addEventListener('click', () => {
         const newProxyValue = proxyTD.querySelector('#new-proxy').value || 1;
@@ -94,7 +98,6 @@ function proxyButton(e, button) {
 }
 
 function postRequestWithNewProxy(user_id, newValue, td) {
-    console.log(newValue)
     axios.post('/api/setproxy', { user_id, newValue })
         .then(response => {
             if (response.status === 200) {
@@ -124,4 +127,29 @@ function renderAlert() {
         </div>
     `;
     document.querySelector('#warning-container').innerHTML = template;
+}
+
+
+function postDeleteUser(e, button) {
+    e.preventDefault();
+    const parentTR = button.closest('tr');
+    const user_id = parentTR.querySelector('.user-id').textContent;
+
+    axios.post('/api/deleteuser', { user_id })
+        .then(response => {
+            if (response.status === 200) {
+                refreshUsers();
+            }
+        })
+        .catch(error => {
+            if (error.response) {
+                console.log("Reponse status: ", error.response.status);
+                console.log("Response data: ", error.response.data);
+            } else if (error.request) {
+                console.log('No response received: ', error.request);
+            } else {
+                console.log('Error: ', error.message);
+            }
+            renderAlert();
+        })
 }
