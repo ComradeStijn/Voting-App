@@ -1,6 +1,6 @@
 import { retrieveFormsByUserID, retrieveFormByFormID, addVotes, retrieveAllForms }  from '../models/formModel.js';
 import { checkUniqueToken, findUserByToken, retrieveAllUsers, setProxy } from '../models/authModel.js';
-import { createUser, deleteUser } from '../models/createModel.js';
+import { createUser, deleteForm, deleteUser } from '../models/createModel.js';
 
 const retrieveForms = (req, res, next) => {
     const user_id = req.session.user.id;
@@ -76,7 +76,6 @@ const adminSetProxyOfUser = (req, res, next) => {
         setProxy(user_id, newVotes);
         res.sendStatus(200);
     } catch (err) {
-        console.log(`Error ${err.code}: ${err.message}`);
         res.sendStatus(400);
     }
     
@@ -88,7 +87,6 @@ const adminDeleteUser = (req, res, next) => {
         deleteUser(user_id);
         res.sendStatus(200);
     } catch (err) {
-        console.log(`Error ${err.code}: ${err.message}`);
         res.sendStatus(400);
     }
 }
@@ -103,7 +101,6 @@ const adminCreateUser = (req, res, next) => {
                 createUser(user_name, user_token, user_votes);
                 res.sendStatus(200);
             } catch (err) {
-                console.log(`Error ${err.code}: ${err.message}`);
                 res.sendStatus(400);
             }
         }
@@ -119,6 +116,18 @@ function random10Digit() {
     return Number(digits);
 }
 
+
+const adminDeleteForm = (req, res, next) => {
+    const form_id = Number(req.body.form_id);
+    try {
+        deleteForm(form_id);
+        res.sendStatus(200);
+    } catch (err) {
+        res.sendStatus(400);
+    }
+}
+
+
 export { 
     retrieveForms, 
     submitForm, 
@@ -126,6 +135,7 @@ export {
     adminRetrieveUsers, 
     adminSetProxyOfUser, 
     adminDeleteUser, 
-    adminCreateUser 
+    adminCreateUser,
+    adminDeleteForm,
 };
 

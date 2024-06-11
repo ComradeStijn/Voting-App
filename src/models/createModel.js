@@ -32,9 +32,6 @@ export function createForm(title, choices) {
     }
 }
 
-
-
-
 export function createUser(name, token, votes) {
     try {
         const formArray = db.prepare('SELECT id FROM forms').all().map(row => row.id);
@@ -59,6 +56,9 @@ export function createUser(name, token, votes) {
     }
 }
 
+
+
+
 export function deleteUser(user_id) {
     try {
         const userQuery = db.prepare('DELETE FROM users WHERE id=?');
@@ -77,3 +77,20 @@ export function deleteUser(user_id) {
     }
 }
 
+export function deleteForm(form_id) {
+    try {
+        const formQuery = db.prepare('DELETE FROM forms WHERE id=?');
+        const junctionQuery = db.prepare('DELETE FROM userJunctionForm WHERE form_id=?');
+
+        const transaction = db.transaction(() => {
+            formQuery.run(form_id);
+            junctionQuery.run(form_id);
+        });
+        transaction();
+        console.log(`Form ${form_id} has been deleted.`);
+        return;
+    } catch (err) {
+        console.error(`Error ${err.code}: ${err.message}`);
+        throw err;
+    }
+}

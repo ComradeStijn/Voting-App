@@ -14,9 +14,12 @@ router.get('/admin', isAdmin, (req, res) => {
 });
 
 router.get('/adminusers', isAdmin, (req, res) => {
-    res.render('adminusers')
+    res.render('adminusers');
 });
 
+router.get('/adminforms', isAdmin, (req, res) => {
+    res.render('adminform');
+})
 
 
 export default router;

@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+
 function renderLogoutLink() {
     const navLinks = document.querySelector('#header-navlink');
     const aElement = document.createElement('a');
@@ -51,6 +53,7 @@ function renderAllUsers(users) {
                 <button class="btn btn-danger fw-bold text-white button-delete">Delete user</button>
             </td>
     `;
+
     for (const user of users) {
         console.log(user);
         const tr = document.createElement('tr');
@@ -71,9 +74,6 @@ function renderAllUsers(users) {
     // Delete button
     document.querySelectorAll('.button-delete').forEach(button => button.addEventListener('click', (e) => postDeleteUser(e, button)));
 }
-
-
-
 
 
 
@@ -113,10 +113,6 @@ function postRequestWithNewProxy(user_id, newValue, td) {
 
 
 
-
-
-
-
 function postDeleteUser(e, button) {
     e.preventDefault();
     const parentTR = button.closest('tr');
@@ -130,10 +126,6 @@ function postDeleteUser(e, button) {
         })
         .catch(error => axiosErrorHandler(error));
 }
-
-
-
-
 
 
 
@@ -155,14 +147,6 @@ function userFormSubmit(event) {
         })
         .catch(error => axiosErrorHandler(error));
 }
-
-
-
-
-
-
-
-
 
 
 
