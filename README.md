@@ -32,4 +32,6 @@ Stijn Servaes - [@ServaesStijn](https://x.com/ServaesStijn)
 
 ## License
 
-This application is license under AGPLv-3. See `LICENSE.txt` for the full text.
+The source code is publically provided here for portfolio purposes.
+The unlicensed use of the contents of this repository is not allowed. Contact me to ask permission.
+Note that /src/views/css contains compiled Bootstrap 5.3 code which falls under the MIT License. 
