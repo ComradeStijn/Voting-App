@@ -87,7 +87,8 @@ function submitButton(event, totalVotes) {
         axios.post('/api/forms', submittedVote)
             .then(response => {
                 console.log('Response', response.data);
-                // Remove card
+                const articleElement = button.closest('article');
+                articleElement.remove();
             }).catch(error => {
                 console.log(error);
                 errorDiv.classList.add('alert', 'alert-danger', 'mt-3');
